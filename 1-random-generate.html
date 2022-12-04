@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>hello react</title>
+    </head>
+
+<body>
+    <div id ='root'>
+    </div>
+<script src="./js/react.development.js"></script>
+<script src="./js/react-dom.development.js"></script>
+<script src="./js/babel.js"></script>
+<script type='text/babel'>
+    
+        const rootHandle = document.getElementById('root')
+
+        class Generate extends React.Component{
+            constructor(){
+                super()
+
+                this.state ={
+                    number :'',
+                    isEnabled : true
+                }
+
+            }
+
+            handleClick =() =>{
+                const number = Math.round(Math.random()*100)
+                this.setState({ number , isEnabled :false })
+
+                setTimeout(() =>{
+                    this.setState({isEnabled : true})
+                }, 3000)
+
+                
+            }
+
+            render(){
+                return(
+                    <div>
+                       {
+                           this.state.isEnabled ? <button onClick ={this.handleClick}>generate</button> : <h2>{this.state.number}</h2>
+                       }
+                        </div>
+                )
+            }
+
+        }
+
+    
+        ReactDOM.render(<Generate/> , rootHandle)
+    </script>
+</body>
+</html>

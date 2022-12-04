@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>hello react</title>
+</head>
+
+<body>
+    <div id='root'>
+    </div>
+    <script src="./js/react.development.js"></script>
+    <script src="./js/react-dom.development.js"></script>
+    <script src="./js/babel.js"></script>
+    <script type='text/babel'>
+
+        const rootHandle = document.getElementById('root')
+
+        class UsersList extends React.Component {
+            constructor() {
+                super()
+                this.state = {
+                    radioOne: true,
+                    radioTwo: false
+                }
+            }
+
+            handleChange = (e) => {
+               // console.log(e.target.checked);
+                if (e.target.value === 'list') {
+                 //   console.log('list is true')
+                    this.setState({ radioOne: !(this.state.radioOne) });
+                    this.setState({ radioTwo: false });
+                }
+                else if (e.target.value === 'table') {
+                   // console.log('table is true')
+                    this.setState({ radioTwo: !(this.state.radioTwo) });
+                    this.setState({ radioOne: false });
+                }
+            }
+
+            render() {
+              //  console.log(this.state.radioOne, 'one')
+                console.log(this.state.radioTwo, 'two')
+                const users = [
+                    { id: 1, name: 'sonali' },
+                    { id: 2, name: 'son' },
+                    { id: 3, name: 'sona' },
+                    { id: 4, name: 'sonal' },
+                ]
+                return (
+                    <div>
+                        <form>
+                            <input type="radio" value="list" name='click' onClick={this.handleChange}
+                            checked={this.state.radioOne}
+                             />list 
+                            <input type="radio" value="table" name='click' onClick={this.handleChange}/>Table 
+                        </form>
+                        {(this.state.radioOne == true) ?
+                          <table border="2">
+                                <thead >
+                                    <tr>
+                                        <th>id</th>
+                                        <th>username</th>
+                                        <th>email</th>
+                                    </tr>
+                                </thead>
+                                <tbody>{
+                                    users.map(function (user) {
+                                        return (
+                                            <tr key={user.id}>
+                                                <td>{user.id}</td>
+                                                <td>{user.name}</td>
+                                                <td>{user.email}</td>
+                                            </tr>
+                                        )
+                                    })
+                                }
+                                </tbody>
+                            </table>  : ""
+                        }{
+                            (this.state.radioTwo===true)?
+                        <div>
+                            <ul>
+                                {
+                                users.map(function (user) {
+                                    return (
+                                        <li key={user.id}> {user.id} {user.name} </li>
+                                    )
+                                })
+                            }</ul>
+                        </div>
+                        :''
+                    }
+                    </div>
+                )
+            }
+        }
+        ReactDOM.render(<UsersList />, rootHandle)
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>hello react</title>
+</head>
+
+<body>
+    <div id='root'>
+    </div>
+    <script src="./js/react.development.js"></script>
+    <script src="./js/react-dom.development.js"></script>
+    <script src="./js/babel.js"></script>
+    <script src="./js/axios.min.js"></script>
+    <script type='text/babel'>
+
+        const rootHandle = document.getElementById('root')
+
+        class Random extends React.Component {
+            constructor() {
+                super()
+                this.state = {
+                    users: [
+                        { id: 1, name: 'q' },
+                        { id: 2, name: 'qw' },
+                        { id: 3, name: 'qwe' },
+                        { id: 4, name: 'qwer'}
+                    ]
+                }
+
+            }
+
+            handleClick = () => {
+                const userRemove =this.state.users[Math.floor(Math.random()*(this.state.users.length))]
+                console.log(userRemove)
+                this.setState((prevState) => {
+                    return {
+                        users: prevState.users.filter(users =>users != userRemove )
+                    }
+                })
+
+                }  
+        
+
+        render(){
+            return (
+                <div>
+                    <table border="2">
+                        <thead>
+                            <tr>
+                                <th> #</th>
+                                <th>title</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {
+                                this.state.users.map(function (task) {
+                                    return (
+                                        <tr key={task.id}>
+                                            <td>{task.id}</td>
+                                            <td>{task.name}</td>
+                                        </tr>)
+
+                                })
+
+                            }
+                        </tbody>
+                    </table>
+                    <button onClick={this.handleClick}>remove</button>
+                </div>
+            )
+        }
+    }  
+
+        ReactDOM.render(<Random />, rootHandle)
+    </script>
+</body>
+
+</html>

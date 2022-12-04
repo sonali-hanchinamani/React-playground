@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>hello react</title>
+    </head>
+
+<body>
+    <div id ='root'>
+    </div>
+<script src="./js/react.development.js"></script>
+<script src="./js/react-dom.development.js"></script>
+<script src="./js/babel.js"></script>
+<script type='text/babel'>
+    
+        const rootHandle = document.getElementById('root')
+
+        class RegistrationForm  extends React.Component{
+            constructor(){
+                super()
+                this.state ={
+                     users : [
+                        {id:1, name:'jack'},
+                            {id:2, name:'randal'},
+                            {id:3, name:'toby'} 
+                        ]
+            }
+            
+        }
+        handleClick = (name) => {
+                const checkUser = prompt("enter username")
+                console.log('User : ' + name + ', checkUser  : ' + checkUser)
+                if (checkUser.toLowerCase() === name.toLowerCase()) {
+                    this.setState((prevState) => {
+                        return {
+                            users: prevState.users.filter((user) => {
+                                return  user.name != checkUser
+                            })
+                        }
+                    })
+                }
+                else {
+                    alert("entered user name does not exit ")
+                }
+            }
+
+
+
+        render (){
+            return(
+                <div>
+                <table border="2">
+        <thead >
+         <tr>
+        <th>id</th>
+        <th>username</th>
+        <th> action</th>
+         </tr>
+        </thead>
+         <tbody>{
+            this.state.users.map(user=> {
+            return (
+                <tr key={user.id}>
+                <td>{user.id}</td>
+                <td>{user.name}</td>
+                <td ><button value ={user.name}onClick={() =>{
+                    this.handleClick(user.name)
+                } }> remove </button></td>
+                </tr>
+            )
+        })
+             }
+    </tbody>
+    </table> </div>
+ )
+        } 
+}
+        ReactDOM.render(<RegistrationForm/> , rootHandle)
+    </script>
+</body>
+</html>

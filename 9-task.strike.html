@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>hello react</title>
+</head>
+
+<body>
+    <div id='root'>
+    </div>
+    <script src="./js/react.development.js"></script>
+    <script src="./js/react-dom.development.js"></script>
+    <script src="./js/babel.js"></script>
+    <script src="./js/axios.min.js"></script>
+    <script type='text/babel'>
+        const rootHandle = document.getElementById('root')
+        class RegistrationForm extends React.Component {
+            constructor() {
+                super()
+
+                this.state = {
+                    task: [
+                        { id: 1, name: 'task1', isCompleted:false },
+                        { id: 2, name: 'task2', isCompleted:false },
+                        { id: 3, name: 'task3', isCompleted:false },
+                        { id: 4, name: 'task4', isCompleted:false },
+                        { id: 5, name: 'task5', isCompleted:false },
+                    ],
+                }
+            }
+
+            handleClick = (e) => {
+              
+                const id= e.target.value
+                this.setState((prevState)=>{
+                  return({
+                       // task : prevState.task.map(task=> task.id == id? !(task.isCompleted) : task)
+                       task : prevState.task.map(task=> task.id == id? Object.assign({}, task, {isCompleted: !task.isCompleted}): Object.assign({}, task) ) 
+                  })
+                })
+               
+            }
+
+            render() {
+                return (
+                    <div>
+                        <ul>{
+                            this.state.task.map(task => {
+                                return(
+                                    <li key={task.id} style={{textDecoration: task.isCompleted ? 'line-through' : 'none'}}>{task.name} 
+                                    <input type="checkbox" value={task.id} onClick={this.handleClick}/>  </li>
+                                )
+                                    })
+                                }
+                                </ul>
+                          
+                        <ul>
+                            
+                        </ul>
+                    </div>
+
+                )
+            }
+        }
+
+        ReactDOM.render(<RegistrationForm />, rootHandle)
+    </script>
+</body>
+
+</html>

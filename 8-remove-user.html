@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>hello react</title>
+</head>
+
+<body>
+    <div id='root'>
+    </div>
+    <script src="./js/react.development.js"></script>
+    <script src="./js/react-dom.development.js"></script>
+    <script src="./js/babel.js"></script>
+    <script src="./js/axios.min.js"></script>
+    <script type='text/babel'>
+        const rootHandle = document.getElementById('root')
+        class RegistrationForm extends React.Component {
+            constructor() {
+                super()
+
+                this.state = {
+                    users: [
+                        { id: 1, name: 'user1' },
+                        { id: 2, name: 'user2' },
+                        { id: 3, name: 'user3' },
+                        { id: 4, name: 'user4' }
+                    ],
+                    lists: []
+                }
+            }
+
+            handleClick = (e) => {
+                const val = e.target.value
+
+                this.setState((prevState) => {
+                    let newlist = []
+
+                    if (!(prevState.lists).includes(val)) {
+
+
+                        newlist = prevState.lists.concat(val)
+                        console.log(newlist)
+                    }
+
+                    else if ((prevState.lists).includes(val)) {
+                        newlist = prevState.lists.filter(user => user !== val)
+                    }
+
+                    return { lists: newlist }
+                })
+
+            }
+
+            render() {
+                return (
+                    <div>
+                        <table border="2">
+                            <thead>
+                                <tr>
+                                    <th> #</th>
+                                    <th>name</th>
+                                    <th> checkbx</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {
+                                    this.state.users.map(task => {
+                                        return (
+                                            <tr key={task.id}>
+                                                <td>{task.id}</td>
+                                                <td>{task.name}</td>
+                                                <td><input type="checkbox" value={task.name} onChange={this.handleClick}
+                                                /></td>
+                                            </tr>)
+                                    })
+                                }
+                            </tbody>
+                        </table>
+                        <ul>
+                            {
+                                this.state.lists.map((user) => {
+                                    return <li key={Math.random()}> {user}   </li>
+                                })
+                            }
+                        </ul>
+                    </div>
+
+                )
+            }
+        }
+
+        ReactDOM.render(<RegistrationForm />, rootHandle)
+    </script>
+</body>
+
+</html>

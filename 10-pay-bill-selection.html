@@ -1,0 +1,66 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>hello react</title>
+    </head>
+
+<body>
+    <div id ='root'>
+    </div>
+<script src="./js/react.development.js"></script>
+<script src="./js/react-dom.development.js"></script>
+<script src="./js/babel.js"></script>
+<script src="./js/axios.min.js"></script>
+<script type='text/babel'>
+    
+        const rootHandle = document.getElementById('root')
+
+        class RegistrationForm extends React.Component{
+            constructor(){
+                super()
+                this.state ={
+                    name :['airtel', 'vodafone' , 'docomo'],
+                    x: 'airtel',
+                    choice :'enter your airtel number'
+                }
+            }
+
+            handleClick =(e) =>{
+               const  x = e.target.value
+               const choice = `enter your ${e.target.value} number`
+               this.setState({choice})
+               
+                if(x === name[0])
+                {
+                    this.setState({x})
+                }
+                else if(x=== name[1]){
+                    this.setState({x})
+                }
+                else(x === name[2])
+                    this.setState({x})
+                
+              
+            }
+            
+            render(){
+                return(
+                    <div>
+                        <h1>pay bill for {this.state.x} </h1>
+                        <form>
+                            <input type="radio" name="recharge" value= {this.state.name[0]} onClick={this.handleClick} defaultChecked/>airtel
+                            <input type="radio" name="recharge" value= {this.state.name[1]} onClick={this.handleClick}/>vodafone
+                            <input type="radio"name="recharge"  value= {this.state.name[2]} onClick={this.handleClick}/>docomo <br/>
+                            
+                           <input type="text" placeholder = {this.state.choice}/>
+                        </form>
+                    </div>
+                )
+            }
+        }
+    
+        ReactDOM.render(<RegistrationForm/> , rootHandle)
+    </script>
+</body>
+</html>

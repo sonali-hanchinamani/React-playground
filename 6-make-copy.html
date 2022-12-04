@@ -1,0 +1,62 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>hello react</title>
+    </head>
+
+<body>
+    <div id ='root'>
+    </div>
+<script src="./js/react.development.js"></script>
+<script src="./js/react-dom.development.js"></script>
+<script src="./js/babel.js"></script>
+<script src="./js/axios.min.js"></script>
+<script type='text/babel'>
+    
+        const rootHandle = document.getElementById('root')
+
+        class Copy extends React.Component{
+            constructor(){
+                super()
+
+                this.state ={
+                    copy : [
+                    {id:0,value:'make a note'},
+                    {id:1,value:'take a note'}
+                    ]
+                }
+            }
+
+            handleClick =(id) =>{
+                const temp ={}
+                temp.id = this.state.copy.length
+                temp.value = this.state.copy[id].value    
+                this.setState((prevState) =>{
+                    return{
+                        copy : [...prevState.copy , temp]
+                    }
+                })          
+            }
+
+            render(){
+                return(
+                    <div>
+                        {
+                            this.state.copy.map((copied)=>{
+                                return(
+                                    <p key={copied.id}>{copied.value}<button onClick={()=>{
+                                        this.handleClick(copied.id)
+                                    }}>copy</button></p>
+                                )
+                            })
+                        }
+                        </div>
+                )
+        }
+    }
+    
+        ReactDOM.render(<Copy/> , rootHandle)
+    </script>
+</body>
+</html>

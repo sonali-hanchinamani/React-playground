@@ -1,0 +1,79 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>hello react</title>
+    </head>
+
+<body>
+    <div id ='root'>
+    </div>
+<script src="./js/react.development.js"></script>
+<script src="./js/react-dom.development.js"></script>
+<script src="./js/babel.js"></script>
+<script src="./js/axios.min.js"></script>
+<script type='text/babel'>
+    
+        const rootHandle = document.getElementById('root')
+
+        class Dashboard extends React.Component{
+            constructor(){
+                super()
+                this.state={
+                    users :[],
+                    todos :[],
+                    posts:[],
+                    isUsers: true,
+                    isTodos: true,
+                    isPosts:true
+                }
+            }
+
+            componentDidMount(){
+                axios.get ('http://jsonplaceholder.typicode.com/users')
+        .then((response) =>{
+            const users = response.data
+            this.setState({ users, isUsers: false})
+        })
+        .catch((err) =>{
+            alert(err)
+        })
+
+                axios.get('http://jsonplaceholder.typicode.com/posts')
+                .then((response)=>{
+                    const posts= response.data
+                    this.setState({posts, isPosts:false})
+                })
+                .catch((err)=>{
+                    alert(err)
+                })
+
+                axios.get('http://jsonplaceholder.typicode.com/todos')
+                .then((response)=>{
+                    const todos= response.data
+                    this.setState({todos, isTodos:false})
+                })
+                .catch((err)=>{
+                    alert(err)
+                })
+
+                }
+            
+            render(){
+                console.log(this.state.users)
+                return(
+                    <div>
+                        <h1>dashboard</h1>
+                        <h2>users: {this.state.isUsers ? 'loading' : this.state.users.length}</h2>
+                        <h2>posts:  {this.state.isPosts ? 'loading' : this.state.posts.length} </h2>
+                        <h2>todos:{this.state.isTodos ? 'loading' : this.state.todos.length} </h2>
+                        </div>
+                )
+            }
+        }
+
+    
+        ReactDOM.render(<Dashboard/> , rootHandle)
+    </script>
+</body>
+</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>hello react</title>
+</head>
+
+<body>
+    <div id='root'>
+    </div>
+    <script src="./js/react.development.js"></script>
+    <script src="./js/react-dom.development.js"></script>
+    <script src="./js/babel.js"></script>
+    <script src="./js/axios.min.js"></script>
+    <script type='text/babel'>
+
+        const rootHandle = document.getElementById('root')
+
+        class Calculator extends React.Component {
+            constructor() {
+                super()
+                this.state = {
+                    rate: 0,
+                    usd: 0,
+                    inr: 0
+                }
+            }
+            componentDidMount() {
+                axios.get('https://api.exchangeratesapi.io/latest?base=USD')
+                    .then((response) => {
+                        const rate = response.data.rates.INR
+                        this.setState({ rate })
+                    })
+                    .catch((err) => {
+                        alert(err)
+                    })
+            }
+
+            handleChange = (e) => {
+                const usd = e.target.value
+                const inr = Number.parseFloat(usd * this.state.rate).toFixed(2)
+                this.setState({ usd, inr })
+            }
+
+            render() {
+                // console.log(this.state.users)
+                return (
+                    <div>
+                        <h1>Currency calcultor </h1>
+
+                        <h2> INR-{this.state.inr} </h2>
+                        <h2> USD-{this.state.usd} </h2>
+
+                        <input type="range" value={this.state.usd} onChange={this.handleChange} />
+                    </div>
+                )
+            }
+        }
+
+        ReactDOM.render(<Calculator />, rootHandle)
+    </script>
+</body>
+
+</html>
